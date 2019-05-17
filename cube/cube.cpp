@@ -2,19 +2,59 @@
 //
 
 #include <iostream>
+#include <time.h>
+#include <windows.h>
+
+#include "interface.h"
+#include "obj.h"
+
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	time_t myt = time(NULL);
+	struct obj ob;
+	struct brick b[(WIDE - 2) * (HIGH - 2)];
+
+	printf("内存地址 %x \n", &b);
+	int brick_num = 0;
+	//printf("%p", ob); //数组名代表的本身是一个指针
+
+	//游戏结束
+	int game_over = 0;
+	//游戏状态
+	int game_step = 0;
+	int score = 0;
+
+	//随机种子
+	//printf("%d", myt);
+	srand(myt);
+	int tm = 0;
+
+	//printf("%d", 11 / 2);
+
+
+	for (; game_over == 0;) {
+		tm = tm + 1;
+		switch (game_step) {
+			case 0://创建一个方块
+				game_step = 1;
+				new_obj( &ob, 1,1);
+				break;
+			case 1://方块运动中
+				break;
+		}
+
+		if (game_step != 2) {
+			control(&ob,b,brick_num);
+			if (tm % 10 == 0) {
+				brick_down(&ob, b, &brick_num, &game_step);
+			}
+			draw(&ob, b, &brick_num, score, game_step);
+			Sleep(10);
+		}
+		else {
+			break;
+		}
+	}
+	printf("game_over");
 }
-
-// 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
-// 调试程序: F5 或调试 >“开始调试”菜单
-
-// 入门提示: 
-//   1. 使用解决方案资源管理器窗口添加/管理文件
-//   2. 使用团队资源管理器窗口连接到源代码管理
-//   3. 使用输出窗口查看生成输出和其他消息
-//   4. 使用错误列表窗口查看错误
-//   5. 转到“项目”>“添加新项”以创建新的代码文件，或转到“项目”>“添加现有项”以将现有代码文件添加到项目
-//   6. 将来，若要再次打开此项目，请转到“文件”>“打开”>“项目”并选择 .sln 文件
