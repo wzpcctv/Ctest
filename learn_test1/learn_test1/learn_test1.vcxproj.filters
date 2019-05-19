@@ -15,22 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="obj.cpp">
+    <ClCompile Include="learn_test1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="interface.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="cube.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="interface.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="obj.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
