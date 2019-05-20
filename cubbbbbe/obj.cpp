@@ -55,7 +55,7 @@ void new_obj(struct obj* obj,int x,int y) {
 
 //¸¡¿ÕµÄ·½¿éÍùÏÂÅÜ
 void brick_down(struct obj* obj, struct brick* brick,int* brick_num,int* game_step) {
-	int n, n2, n3 = 0,n4,num,x = 0;
+	int n, n2, n3 = 0,n4,n5,num,x = 0;
 	int xx, yy;
 	int over = 0;
 	for (n = 0; n < 16; n++) {
