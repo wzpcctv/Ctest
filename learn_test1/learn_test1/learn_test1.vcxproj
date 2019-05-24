@@ -152,6 +152,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="learn_test1.cpp" />
+    <ClCompile Include="Line.cpp" />
+    <ClCompile Include="loc.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="loc.h" />
+    <ClInclude Include="Line.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
