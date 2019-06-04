@@ -151,7 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Rod.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Rod.h" />
+    <ClInclude Include="Direction.h" />
+    <ClInclude Include="Map.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

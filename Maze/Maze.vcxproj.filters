@@ -18,5 +18,22 @@
     <ClCompile Include="Maze.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Rod.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Rod.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Direction.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
