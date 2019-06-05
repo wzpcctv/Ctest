@@ -13,12 +13,11 @@ int main()
 
 	bool over = false;
 
-	/*while (over == false) {
+	while (over == false) {
 		map->update();
 
-		Sleep(100);
-	}*/
-
+		Sleep(1000);
+	}
 
 }
 

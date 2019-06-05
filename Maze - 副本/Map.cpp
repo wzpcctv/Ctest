@@ -1,4 +1,5 @@
 
+#include "Rod.h"
 #include "Map.h"
 
 Map::Map(){
@@ -13,7 +14,7 @@ Map::Map(int size) {
 	//初始化界面
 	inter = new Interface();
 	//printf("初始化对象 %x  %x", &inter, inter);
-	newRod(1, 1, Direction::RIGHT);
+	newRod(1, 1, Direction::LEFT);
 
 	fresh();
 }
@@ -68,62 +69,12 @@ void Map::fresh()
 
 void Map::update() {
 	for (int i = 0; i < rodNum; i++) {
-		if (rod[i]->isOver()){
-			rod[i] -> move(this);
-		}
-		else if (i != 0){
-			delete rod[i];
-			rod[i] = rod[rodNum];
-			rodNum--;
-		}
+		rod[i].move(this);
 	}
-	if (rand() % 100 < 30) {
-		newRod(rod[0]->getX(), rod[0]->getY(),Direction::LEFT);
-	}
-	inter->move(0, 22, rodNum);
 }
 
 void Map::newRod(int x, int y, Direction dir) {
 	//初始化一个挖路点
-	rod[rodNum] = new Rod(this, x, y, dir);
+	rod[rodNum] = Rod(this, x, y, dir);
 	rodNum = 1;
-}
-
-int Map::cubeSide(int x, int y) {
-	int i = 0;
-	if (isEmpty(x + 0, y + 1)) {
-		i = i + 1;
-	}
-	if (isEmpty(x + 1, y + 0)) {
-		i = i + 1;
-	}
-	if (isEmpty(x + 0, y + -1)) {
-		i = i + 1;
-	}
-	if (isEmpty(x + -1, y + 0)) {
-		i = i + 1;
-	}
-	return i;
-}
-
-bool Map::cross(int x, int y,Direction dir) {
-	if ((dir == Direction::UP or dir == Direction::DOWN) and isEmpty(x + 0, y + -1) and isEmpty(x + 0, y + 1)) {
-		return true;
-	}
-	if ((dir == Direction::RIGHT or dir == Direction::LEFT) and isEmpty(x + 1, y + 0) and isEmpty(x + -1, y + 0)) {
-		return true;
-	}
-	return false;
-}
-
-bool Map::out(int x, int y) {
-	return x == 0 or y == 0 or x == WIDE - 1 or y == HIGH - 1;
-}
-
-void Map::move(int x, int y, char ch) {
-	inter->move(x, y, ch);
-}
-
-void Map::move(int x, int y, int ch) {
-	inter->move(x, y, ch);
 }

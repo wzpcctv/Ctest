@@ -27,11 +27,6 @@ public:
 	void fresh();
 	void update();
 	void newRod(int x, int y, Direction dir);
-	int cubeSide(int x,int y);
-	bool cross(int x, int y, Direction dir);
-	bool out(int x, int y);
-	void move(int x, int y, char ch);
-	void move(int x, int y, int ch);
 private:
 	int* m_iMap;
 	int m_iWide;
@@ -39,6 +34,6 @@ private:
 	//Êä³ö
 	Interface* inter;
 	//ÍÚÂ·µã
-	Rod* rod[100];
+	Rod rod[100];
 	int rodNum = 0;
 };
