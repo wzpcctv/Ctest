@@ -11,6 +11,7 @@ public:
 	enum type { EMPTY,WALL };
 	Map();
 	Map(int size);
+	void create(int x, int y, int dir);
 	//传入xy获取index
 	int getIndex(int x, int y);
 	//传入xy获取格子的值
@@ -28,7 +29,7 @@ public:
 	void update();
 	void newRod(int x, int y, Direction dir);
 	int cubeSide(int x,int y);
-	bool cross(int x, int y, Direction dir);
+	bool cross(int x, int y, int dir);
 	bool out(int x, int y);
 	void move(int x, int y, char ch);
 	void move(int x, int y, int ch);

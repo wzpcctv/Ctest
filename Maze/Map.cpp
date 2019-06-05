@@ -1,4 +1,5 @@
 
+#include <Windows.h>
 #include "Map.h"
 
 Map::Map(){
@@ -13,11 +14,45 @@ Map::Map(int size) {
 	//初始化界面
 	inter = new Interface();
 	//printf("初始化对象 %x  %x", &inter, inter);
-	newRod(1, 1, Direction::RIGHT);
+	//newRod(1, 1, Direction::RIGHT);
 
 	fresh();
+	create(1,1,1);
 }
 
+int tm = 0;
+
+void Map::create(int x,int y,int dir) {
+	move(x, y, ' ');
+	Sleep(100);
+	tm = tm + 1;
+	int dirNow = dir;
+	if (rand() % 100 < 50) {
+		dirNow += rand() % 4;
+	}
+	for (int i = 0; i < 4; i++) {
+		if (cross(x, y, (dirNow +i)%4 )) {
+			switch (dirNow) {
+			case 0:
+				create(x, y + 1, (dirNow + i) % 4);
+				break;
+			case 1:
+				create(x+1, y , (dirNow + i) % 4);
+				break;
+			case 2:
+				create(x, y -1, (dirNow + i) % 4);
+				break;
+			case 3:
+				create(x-1, y, (dirNow + i) % 4);
+				break;
+			}
+		}
+		else {
+			return;
+		}
+	}
+	move(0, 22,tm);
+}
 
 //传入xy获取index
 int Map::getIndex(int x, int y) {
@@ -106,11 +141,17 @@ int Map::cubeSide(int x, int y) {
 	return i;
 }
 
-bool Map::cross(int x, int y,Direction dir) {
-	if ((dir == Direction::UP or dir == Direction::DOWN) and isEmpty(x + 0, y + -1) and isEmpty(x + 0, y + 1)) {
+bool Map::cross(int x, int y,int dir) {
+	if (dir == 0 and check(x + 0, y + 1, type::WALL) and check(x + 0, y + 2, type::WALL)) {
 		return true;
 	}
-	if ((dir == Direction::RIGHT or dir == Direction::LEFT) and isEmpty(x + 1, y + 0) and isEmpty(x + -1, y + 0)) {
+	if (dir == 1 and check(x + 1, y + 0, type::WALL) and check(x + 2, y + 0, type::WALL)) {
+		return true;
+	}
+	if (dir == 2 and check(x + 0, y - 1, type::WALL) and check(x + 0, y - 2, type::WALL)) {
+		return true;
+	}
+	if (dir == 3 and check(x - 1, y + 0, type::WALL) and check(x - 2, y + 0, type::WALL)) {
 		return true;
 	}
 	return false;
