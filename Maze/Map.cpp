@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "Map.h"
 #include <iostream>
+#include <time.h>
 
 Map::Map(){
 
@@ -26,6 +27,9 @@ Map::Map(int size) {
 int tm = 0;
 
 void Map::create(int x,int y) {
+	time_t myt = time(NULL);
+	srand(myt);
+
 	setCube(x, y, type::EMPTY);
 	Sleep(50);
 	tm = tm + 1;
