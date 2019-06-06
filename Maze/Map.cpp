@@ -1,6 +1,7 @@
 
 #include <Windows.h>
 #include "Map.h"
+#include <iostream>
 
 Map::Map(){
 
@@ -15,43 +16,72 @@ Map::Map(int size) {
 	inter = new Interface();
 	//printf("初始化对象 %x  %x", &inter, inter);
 	//newRod(1, 1, Direction::RIGHT);
-
+	cout << "Hellow" << endl;
 	fresh();
-	create(1,1,1);
+	create(1,1);
+
+	move(0, HIGH + 3, 'END');
 }
 
 int tm = 0;
 
-void Map::create(int x,int y,int dir) {
-	move(x, y, ' ');
-	Sleep(100);
+void Map::create(int x,int y) {
+	setCube(x, y, type::EMPTY);
+	Sleep(50);
 	tm = tm + 1;
-	int dirNow = dir;
-	if (rand() % 100 < 50) {
-		dirNow += rand() % 4;
-	}
+
+	int dirc[4][2] = {
+		{1,0},
+		{0,1},
+		{0,-1},
+		{-1,0}
+	};
+
 	for (int i = 0; i < 4; i++) {
-		if (cross(x, y, (dirNow +i)%4 )) {
-			switch (dirNow) {
-			case 0:
-				create(x, y + 1, (dirNow + i) % 4);
-				break;
-			case 1:
-				create(x+1, y , (dirNow + i) % 4);
-				break;
-			case 2:
-				create(x, y -1, (dirNow + i) % 4);
-				break;
-			case 3:
-				create(x-1, y, (dirNow + i) % 4);
-				break;
-			}
-		}
-		else {
-			return;
+		int temp;
+		int rd = rand() % 4;
+		temp = dirc[rd][0];
+		dirc[rd][0] = dirc[i][0];
+		dirc[i][0] = temp;
+		temp = dirc[rd][1];
+		dirc[rd][1] = dirc[i][1];
+		dirc[i][1] = temp;
+	}
+
+	for (int n = 0; n < 4; n++) {
+		int xb = x + dirc[n][0];
+		int yb = y + dirc[n][1];
+
+		if (cubeSide(xb, yb) == 3 and cubeSideB(xb,yb)>2) {
+			create(xb, yb);
 		}
 	}
-	move(0, 22,tm);
+
+	//if (rand() % 100 < 50) {
+	//	dirNow += rand() % 4;
+	//}
+	//for (int i = 0; i < 4; i++) {
+	//	if (cross(x, y, (dirNow +i)%4 )) {
+	//		switch (dirNow) {
+	//		case 0:
+	//			create(x, y + 1, (dirNow + i) % 4);
+	//			break;
+	//		case 1:
+	//			create(x+1, y , (dirNow + i) % 4);
+	//			break;
+	//		case 2:
+	//			create(x, y -1, (dirNow + i) % 4);
+	//			break;
+	//		case 3:
+	//			create(x-1, y, (dirNow + i) % 4);
+	//			break;
+	//		}
+	//	}
+	//	else {
+	//		return;
+	//	}
+	//}
+	//move(0, 22,tm);
 }
 
 //传入xy获取index
@@ -84,8 +114,15 @@ bool Map::isEmpty(int x, int y) {
 	return (cubeType(x, y) == type::EMPTY);
 }
 
+bool Map::isWall(int x, int y) {
+	return (cubeType(x, y) == type::WALL);
+}
+
 //判断格子的状态
 bool Map::check(int x, int y, int type) {
+	if (out(x, y)) {
+		return true;
+	}
 	return (cubeType(x, y) == type);
 }
 
@@ -94,6 +131,7 @@ void Map::setCube(int x, int y, int type) {
 	//printf("\n输出对象地址 %x  %x", &inter, inter);
 	*(getCube(x, y)) = type;
 	inter->fresh(this, x, y);
+	move(x, y, ' ');
 }
 
 void Map::fresh()
@@ -125,40 +163,51 @@ void Map::newRod(int x, int y, Direction dir) {
 }
 
 int Map::cubeSide(int x, int y) {
+	if (out(x, y)) {
+		return 0;
+	}
 	int i = 0;
-	if (isEmpty(x + 0, y + 1)) {
+	if (isWall(x + 0, y + 1)) {
 		i = i + 1;
 	}
-	if (isEmpty(x + 1, y + 0)) {
+	if (isWall(x + 1, y + 0)) {
 		i = i + 1;
 	}
-	if (isEmpty(x + 0, y + -1)) {
+	if (isWall(x + 0, y + -1)) {
 		i = i + 1;
 	}
-	if (isEmpty(x + -1, y + 0)) {
+	if (isWall(x + -1, y + 0)) {
+		i = i + 1;
+	}
+	return i;
+}
+
+int Map::cubeSideB(int x, int y) {
+	if (out(x, y)) {
+		return 4;
+	}
+	int i = 0;
+	if (isWall(x + 1, y + 1)) {
+		i = i + 1;
+	}
+	if (isWall(x + -1, y + 1)) {
+		i = i + 1;
+	}
+	if (isWall(x + 1, y + -1)) {
+		i = i + 1;
+	}
+	if (isWall(x + -1, y + -1)) {
 		i = i + 1;
 	}
 	return i;
 }
 
 bool Map::cross(int x, int y,int dir) {
-	if (dir == 0 and check(x + 0, y + 1, type::WALL) and check(x + 0, y + 2, type::WALL)) {
-		return true;
-	}
-	if (dir == 1 and check(x + 1, y + 0, type::WALL) and check(x + 2, y + 0, type::WALL)) {
-		return true;
-	}
-	if (dir == 2 and check(x + 0, y - 1, type::WALL) and check(x + 0, y - 2, type::WALL)) {
-		return true;
-	}
-	if (dir == 3 and check(x - 1, y + 0, type::WALL) and check(x - 2, y + 0, type::WALL)) {
-		return true;
-	}
-	return false;
+	return true;
 }
 
 bool Map::out(int x, int y) {
-	return x == 0 or y == 0 or x == WIDE - 1 or y == HIGH - 1;
+	return x <= 0 or y <= 0 or x >= WIDE - 1 or y >= HIGH - 1;
 }
 
 void Map::move(int x, int y, char ch) {

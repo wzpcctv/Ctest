@@ -1,7 +1,7 @@
 #pragma once
 
-#define WIDE 30
-#define HIGH 20
+#define WIDE 50
+#define HIGH 40
 
 #include "Rod.h"
 #include "Interface.h"
@@ -11,7 +11,7 @@ public:
 	enum type { EMPTY,WALL };
 	Map();
 	Map(int size);
-	void create(int x, int y, int dir);
+	void create(int x, int y);
 	//传入xy获取index
 	int getIndex(int x, int y);
 	//传入xy获取格子的值
@@ -21,6 +21,7 @@ public:
 	char getCubeChar(int x, int y);
 	//判断这格是否是空的
 	bool isEmpty(int x, int y);
+	bool isWall(int x, int y);
 	//判断格子的状态
 	bool check(int x, int y, int type);
 	//设置格子状态
@@ -28,7 +29,8 @@ public:
 	void fresh();
 	void update();
 	void newRod(int x, int y, Direction dir);
-	int cubeSide(int x,int y);
+	int cubeSide(int x, int y);
+	int cubeSideB(int x, int y);
 	bool cross(int x, int y, int dir);
 	bool out(int x, int y);
 	void move(int x, int y, char ch);

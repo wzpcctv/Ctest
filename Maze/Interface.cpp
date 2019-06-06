@@ -26,13 +26,13 @@ void Interface::move(int x, int y) {
 void Interface::move(int x, int y, char ch) {
 	move(x, y);
 	cout << ch;
-	move(0, 0);
+	move(0, HIGH + 5);
 }
 
 void Interface::move(int x, int y, int ch) {
 	move(x, y);
 	cout << ch;
-	move(0, 0);
+	move(0, HIGH + 5);
 }
 
 void Interface::fresh(Map* map) {
