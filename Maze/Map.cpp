@@ -52,7 +52,7 @@ void Map::create(int x,int y) {
 		int xb = x + dirc[n][0];
 		int yb = y + dirc[n][1];
 
-		if (cubeSide(xb, yb) == 3 and cubeSideB(xb,yb)>2) {
+		if (cubeSide(xb, yb) >= 3 and cubeSideB(xb,yb)>2) {
 			create(xb, yb);
 		}
 	}
