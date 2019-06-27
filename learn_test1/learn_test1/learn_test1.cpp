@@ -47,7 +47,10 @@ public:
 		cout << "Title" << endl;
 		for (int y = 0; y < 10; y++) {
 			for (int x = 0; x < 10; x++) {
-				if (*(m_pMap + y * 10 + x) == 1) {
+				if (x==overX and y == overY){
+					cout << "+";
+				}
+				else if(*(m_pMap + y * 10 + x) == 1) {
 					cout << "#";
 				}
 				else {
@@ -101,37 +104,37 @@ public:
 			}
 			else {
 				turn_dir(true);
-				debug("B");
 				//m_iState = 1;
 			}
 		}
 		else {
 			turn_dir(false);
-
-			debug("C");
 		}
 
 		if (m_Map->pas(m_iX + move_x, m_iY + move_y)) {
 			m_iX += move_x;
 			m_iY += move_y;
 		}
-		fresh();
 
-		if (m_iX == overX and m_iY == overY) {
-			over == true;
+		if (m_iX == overX and m_iY == overY ) {
+			over = true;
 		}
+		fresh();
 	}
 
 	void start() {
 		move(m_iX, m_iY);
-		cout << image << endl;
+
 		while (over == false) {
 			Sleep(100);
 			AI();
-
-			move(0, 0);
+			if (over) {
+				break;
+			}
 		}
-		cout << "游戏结束" << endl;
+
+		move(0, 11);
+		cout << "找到出口" << endl;
 	}
 
 	void turn_dir(bool right) {
@@ -224,7 +227,6 @@ int main(void)
 	};
 	Map* map = new Map(&int_map[0][0],10,10);
 	Man* man = new Man(1, 9, UP);
-
 
 
 	man->set_map(map);
